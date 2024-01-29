@@ -78,6 +78,7 @@ public class Main{
                                 input = input_user.readLine().toLowerCase();
                                 switch (input) {
                                     case "get out":{
+                                        volta_DA_VINCI.fastened_unfastened_driver_belt();
                                         volta_DA_VINCI.parking();
                                         volta_DA_VINCI.close_car();
                                         volta_DA_VINCI.car_off();
@@ -132,6 +133,8 @@ public class Main{
                                         try {
                                             System.out.println("Accelerate \n Enter velocity: ");
                                             volta_DA_VINCI.accelerate(Integer.parseInt(input_user.readLine().toLowerCase()));
+                                            volta_DA_VINCI.change_gear(Gear.D);
+                                            if(volta_DA_VINCI.isDriver_belt_fastened()) System.out.println("Remember to fasten your seat belt, \n and also check the one next to you.")
                                         } catch (IOException error) {
                                             System.out.println("Enter only numbers!!");
                                         }
@@ -139,6 +142,7 @@ public class Main{
                                     }
                                     case "decelerate": {
                                         volta_DA_VINCI.decelerate();
+                                        if(volta_DA_VINCI.getVelocity() == 0) volta_DA_VINCI.parking()
                                         break;
                                     }
                                     case "change gear": {
@@ -534,7 +538,10 @@ public class Main{
                                 for (i = 0; i < optionsCarOff.length; i++) System.out.println((i + 1) + ")" + optionsCarOff[i]);
                                 System.out.print(choose_options);
                                 input = input_user.readLine().toLowerCase();
-                                if ("get into".equals(input)) {volta_DA_VINCI.car_on();}
+                                if ("get into".equals(input)) {
+                                    volta_DA_VINCI.car_on();
+                                    volta_DA_VINCI.open_car();
+                                }
                             } catch (IOException error) {System.out.println(msg_error);}
                             break;
                         }
@@ -593,6 +600,7 @@ public class Main{
                                 input = input_user.readLine().toLowerCase();
                                 switch (input) {
                                     case "open/close driver door": {
+                                        volta_DA_VINCI.lock_unlock_driver_door();
                                         volta_DA_VINCI.open_close_drivers_door();
                                         if (volta_DA_VINCI.isDrivers_door_closed()) System.out.println("Driver's door: close");
                                         else System.out.println("Driver's door: open");
@@ -606,6 +614,7 @@ public class Main{
                                     }
 
                                     case "open/close passenger door": {
+                                        volta_DA_VINCI.lock_unlock_passenger_front_door();
                                         volta_DA_VINCI.open_close_passenger_front_door();
                                         if (volta_DA_VINCI.isPassenger_door_closed()) System.out.println("Passenger's door: close");
                                         else System.out.println("Passenger's door: open");
@@ -619,6 +628,7 @@ public class Main{
                                     }
 
                                     case "open/close hood": {
+                                        volta_DA_VINCI.lock_unlock_hood();
                                         volta_DA_VINCI.open_close_hood();
                                         if (volta_DA_VINCI.isHood_closed()) System.out.println("Hood: close");
                                         else System.out.println("Hood: open");
@@ -626,6 +636,7 @@ public class Main{
                                     }
 
                                     case "open/close luggage": {
+                                        volta_DA_VINCI.lock_unlock_luggage();
                                         volta_DA_VINCI.open_close_luggage();
                                         if (volta_DA_VINCI.isLuggage_closed()) System.out.println("Luggage: close");
                                         else System.out.println("Luggage: open");
